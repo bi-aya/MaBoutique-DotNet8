@@ -1,0 +1,66 @@
+﻿@page
+@model Maboutique.Pages.Produits.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Produit[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produit[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produit[0].Prix)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produit[0].ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produit[0].Quantité)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produit[0].Categorie)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Produit) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prix)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantité)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categorie.Nom)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

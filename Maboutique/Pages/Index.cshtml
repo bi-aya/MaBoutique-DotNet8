@@ -1,0 +1,93 @@
+﻿@page
+@model Maboutique.Pages.IndexModel
+@{
+    ViewData["Title"] = "Librairie";
+}
+
+<div class="rounded-3 p-5 mb-5 text-white shadow-sm position-relative overflow-hidden"
+     style="background-color: #2c3e50; background-image: url('https://images.unsplash.com/photo-1507842217121-9e9f1929c5f7?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center;">
+
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);"></div>
+
+    <div class="position-relative container py-4">
+        <h1 class="display-4 fw-bold">Découvrez votre prochaine lecture</h1>
+        <p class="lead col-md-8">Romans, Bande dessinée, essais... Plongez dans notre collection.</p>
+        <a href="#rayons" class="btn btn-warning btn-lg fw-bold mt-2">Explorer les rayons</a>
+    </div>
+</div>
+
+<div class="container" id="rayons">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h3 class="fw-bold m-0"><i class="bi bi-book"></i> Nos Rayons</h3>
+
+        <div class="d-flex gap-2 overflow-auto pb-2 hide-scrollbar" style="white-space: nowrap;">
+            <a asp-page="./Index" asp-route-CategorieId=""
+               class="btn rounded-pill px-4 @(Model.CategorieId == null ? "btn-dark" : "btn-outline-dark")">
+                Tout
+            </a>
+
+            @foreach (var cat in Model.Categories)
+            {
+                <a asp-page="./Index" asp-route-CategorieId="@cat.Id"
+                   class="btn rounded-pill px-4 @(Model.CategorieId == cat.Id ? "btn-dark" : "btn-outline-dark")">
+                    @cat.Nom
+                </a>
+            }
+        </div>
+    </div>
+
+    @if (Model.Produits.Count == 0)
+    {
+        <div class="alert alert-info text-center py-5">
+            <i class="bi bi-search display-4"></i>
+            <p class="mt-3">Aucun livre trouvé dans ce rayon.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4">
+            @foreach (var item in Model.Produits)
+            {
+                <div class="col">
+                    <div class="book-card h-100">
+                        <div class="book-cover-container">
+                            <a asp-page="./Details" asp-route-id="@item.Id">
+                                <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "https://placehold.co/150x220?text=Livre" : item.ImageUrl)"
+                                     class="book-cover" alt="@item.Nom">
+                            </a>
+
+                            <form method="post" asp-page-handler="AddToCart" asp-route-id="@item.Id">
+                                <button type="submit" class="quick-add-btn" title="Ajouter au panier">
+                                    <i class="bi bi-cart-plus-fill"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="mt-2">
+                            <div class="text-warning small mb-1">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                            </div>
+
+                            <h5 class="book-title">
+                                <a asp-page="./Details" asp-route-id="@item.Id" class="text-decoration-none text-dark">
+                                    @item.Nom
+                                </a>
+                            </h5>
+
+                            <p class="book-author text-truncate">@item.Description</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span class="book-price">@item.Prix.ToString("C")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
