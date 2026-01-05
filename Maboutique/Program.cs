@@ -33,6 +33,9 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// Injection du Service IA
+builder.Services.AddScoped<Maboutique.Services.OpenAIService>();
+
 var app = builder.Build();
 
 // --- DÉBUT CONFIGURATION DIRHAM ---

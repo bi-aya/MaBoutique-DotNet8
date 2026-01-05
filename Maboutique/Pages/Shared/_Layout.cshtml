@@ -23,10 +23,10 @@
                        <!--
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li> -->
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+                         </li> -->
                         <li class="nav-item"><a class="nav-link text-dark" asp-page="/Cart">Mon Panier</a></li>
                         @if (User.IsInRole("Admin"))
                         {
@@ -36,6 +36,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-page="/Produits/Index">Gestion des produits</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Categories/Index">Gestion des categories</a></li>
                                 </ul>
                             </li>
                         }

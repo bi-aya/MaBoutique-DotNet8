@@ -4,7 +4,7 @@
     ViewData["Title"] = "Librairie";
 }
 
-<div class="rounded-3 p-5 mb-5 text-white shadow-sm position-relative overflow-hidden"
+<!---<div class="rounded-3 p-5 mb-5 text-white shadow-sm position-relative overflow-hidden"
      style="background-color: #2c3e50; background-image: url('https://images.unsplash.com/photo-1507842217121-9e9f1929c5f7?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center;">
 
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);"></div>
@@ -13,6 +13,30 @@
         <h1 class="display-4 fw-bold">Découvrez votre prochaine lecture</h1>
         <p class="lead col-md-8">Romans, Bande dessinée, essais... Plongez dans notre collection.</p>
         <a href="#rayons" class="btn btn-warning btn-lg fw-bold mt-2">Explorer les rayons</a>
+    </div>
+</div>--->
+
+<div class="p-5 mb-4 text-white rounded-3 shadow" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container-fluid py-2">
+        <h1 class="display-5 fw-bold"><i class="bi bi-robot"></i> Assistant Libraire IA</h1>
+        <p class="fs-5">Une envie de lecture ? Demandez conseil à notre intelligence artificielle !</p>
+
+        <form method="post" asp-page-handler="AskAi" class="mt-4">
+            <div class="input-group input-group-lg">
+                <input asp-for="QuestionUser" class="form-control border-0" placeholder="Ex: Je veux un livre policier avec du suspense..." />
+                <button type="submit" class="btn btn-warning fw-bold text-dark">
+                    <i class="bi bi-send-fill"></i> Demander
+                </button>
+            </div>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.ReponseIA))
+        {
+            <div class="mt-4 p-4 bg-white text-dark rounded shadow-sm border-start border-5 border-warning">
+                <h5 class="fw-bold text-warning"><i class="bi bi-chat-quote-fill"></i> Réponse :</h5>
+                <p class="mb-0 fs-5">@Model.ReponseIA</p>
+            </div>
+        }
     </div>
 </div>
 
@@ -27,12 +51,19 @@
                 Tout
             </a>
 
-            @foreach (var cat in Model.Categories)
+            @if (Model.Produits != null && Model.Produits.Count > 0)
             {
-                <a asp-page="./Index" asp-route-CategorieId="@cat.Id"
-                   class="btn rounded-pill px-4 @(Model.CategorieId == cat.Id ? "btn-dark" : "btn-outline-dark")">
-                    @cat.Nom
-                </a>
+                @foreach (var cat in Model.Categories)
+                {
+                    <a asp-page="./Index" asp-route-CategorieId="@cat.Id"
+                       class="btn rounded-pill px-4 @(Model.CategorieId == cat.Id ? "btn-dark" : "btn-outline-dark")">
+                        @cat.Nom
+                    </a>
+                }
+            }
+            else
+            {
+                <p>Aucun produit trouvé pour le moment.</p>
             }
         </div>
     </div>
