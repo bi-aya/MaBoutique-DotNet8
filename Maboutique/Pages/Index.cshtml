@@ -32,11 +32,51 @@
 
         @if (!string.IsNullOrEmpty(Model.ReponseIA))
         {
-            <div class="mt-4 p-4 bg-white text-dark rounded shadow-sm border-start border-5 border-warning">
-                <h5 class="fw-bold text-warning"><i class="bi bi-chat-quote-fill"></i> Réponse :</h5>
-                <p class="mb-0 fs-5">@Model.ReponseIA</p>
+            <div id="zoneReponseIA" class="mt-4 position-relative bg-white text-dark rounded-3 shadow border-start border-5 border-warning animate__animated animate__fadeInUp">
+
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" onclick="fermerReponse()"></button>
+
+                <div class="p-4">
+                    <h5 class="fw-bold text-warning"><i class="bi bi-chat-quote-fill"></i> Le Conseil :</h5>
+                    <p class="fs-5 mb-3">@Model.ReponseIA</p>
+
+                    @if (Model.ProduitsSuggeres != null && Model.ProduitsSuggeres.Any())
+                    {
+                        <hr class="text-muted" />
+                        <p class="small text-muted mb-2"><i class="bi bi-basket"></i> Ajouter rapidement au panier :</p>
+
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach (var p in Model.ProduitsSuggeres)
+                            {
+                                <div class="d-flex align-items-center bg-light border rounded-pill pe-2 ps-3 py-1">
+                                    <span class="fw-bold me-2 small">@p.Nom</span>
+                                    <span class="text-success small me-2">@p.Prix DH</span>
+
+                                    <form method="post" asp-page-handler="AddToCart" asp-route-id="@p.Id" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-dark rounded-circle" style="width: 30px; height: 30px; padding: 0;" title="Ajouter au panier">
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
             </div>
         }
+        <script>
+            function fermerReponse() {
+                var zone = document.getElementById('zoneReponseIA');
+                if (zone) {
+                    // Animation de disparition douce
+                    zone.style.transition = "opacity 0.5s ease";
+                    zone.style.opacity = "0";
+                    setTimeout(function() {
+                        zone.style.display = "none";
+                    }, 500);
+                }
+            }
+        </script>
     </div>
 </div>
 

@@ -41,7 +41,7 @@ namespace Maboutique.Services
                 var options = new OpenAIClientOptions { Endpoint = new Uri("https://api.groq.com/openai/v1") };
                 ChatClient client = new(model: "llama-3.3-70b-versatile", credential: new ApiKeyCredential(_apiKey), options: options);
 
-                // 3. Le Prompt RAG (C'est ici que tout se joue)
+                // 3. Le Prompt RAG
                 string systemPrompt = "Tu es un vendeur expert chez 'MaBoutique'. " +
                                       "Utilise UNIQUEMENT les informations fournies dans la liste 'VOICI LES LIVRES DISPONIBLES' pour répondre. " +
                                       "Si le livre n'est pas dans la liste, dis poliment que nous ne l'avons pas. " +
@@ -50,7 +50,7 @@ namespace Maboutique.Services
 
                 var messages = new List<ChatMessage>
                 {
-                    new SystemChatMessage(systemPrompt + "\n\n" + contexteProduits.ToString()), // On injecte les données ici !
+                    new SystemChatMessage(systemPrompt + "\n\n" + contexteProduits.ToString()), // On injecte les données 
                     new UserChatMessage(questionClient)
                 };
 
